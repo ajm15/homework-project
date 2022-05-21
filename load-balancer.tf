@@ -1,3 +1,4 @@
+//creates a listener rule, this is a place holder and would need to be updated prior to production
 resource "aws_alb_listener_rule" "static" {
     listener_arn = "${aws_alb_listener.public-https-listener.arn}"
     priority = 100
@@ -14,6 +15,7 @@ resource "aws_alb_listener_rule" "static" {
     }
 }
 
+//creates an AWS ALB
 resource "aws_alb" "redcanary-public-alb" {
     name = "redcanary-public"
     internal = "false"
@@ -21,7 +23,7 @@ resource "aws_alb" "redcanary-public-alb" {
     security_groups = [aws_security_group.public-alb-sg.id]
     subnets = ["${aws_subnet.redcanary-subnet-public-1.id}","${aws_subnet.redcanary-subnet-public-2.id}"]
 
-//access logs should be sent to a specified S3 bucket
+//access logs are sent to a specified S3 bucket
   access_logs {    
     bucket = "${aws_s3_bucket.alb-logs-s3.id}"
     prefix = "ELB-logs"  
@@ -32,6 +34,7 @@ resource "aws_alb" "redcanary-public-alb" {
     }
 }
 
+//creates target group to associate with ALB
 resource "aws_lb_target_group" "app-servers-tg" {
     name = "app-servers-tg"
     port = 443
@@ -49,6 +52,8 @@ resource "aws_lb_target_group" "app-servers-tg" {
     }
 }
 
+//creates an ALB listener with a dummy certificate
+//this will have to be changed to a real certificate prior to production deployment
 resource "aws_alb_listener" "public-https-listener" {
     load_balancer_arn = "${aws_alb.redcanary-public-alb.arn}"
     port = "443"
@@ -64,27 +69,4 @@ resource "aws_alb_listener" "public-https-listener" {
       type = "forward"
       target_group_arn = aws_lb_target_group.app-servers-tg.arn
     }
-}
-
-resource "aws_s3_bucket" "alb-logs-s3" {
-    bucket = "amiko-alb-logs-s3"
-     
-    tags = {
-        Name = "amiko-alb-logs-s3"
-        Environment = "Prod"
-    }
-}
-
-resource "aws_s3_bucket_acl" "alb-logs-s3-acl" {
-    bucket = aws_s3_bucket.alb-logs-s3.id
-    acl = "private"
-}
-
-resource "aws_s3_bucket_public_access_block" "s3-block-public" {
-    bucket = aws_s3_bucket.alb-logs-s3.id
-
-    block_public_acls = true
-    block_public_policy = true
-    ignore_public_acls =  true
-    restrict_public_buckets = true
 }
