@@ -1,3 +1,4 @@
+//establishes a basic VPC with a cidr of slash-16 for maximal hosts
 resource "aws_vpc" "redcanary-vpc" {
     cidr_block = "10.0.0.0/16"
     enable_dns_support = "true"
@@ -10,6 +11,7 @@ resource "aws_vpc" "redcanary-vpc" {
     }
 }
 
+//creates two public subnets, one in each of two availability zones for redundancy
 resource "aws_subnet" "redcanary-subnet-public-1" {
     vpc_id = "${aws_vpc.redcanary-vpc.id}"
     cidr_block = "10.0.0.0/24"
@@ -20,7 +22,7 @@ resource "aws_subnet" "redcanary-subnet-public-1" {
         Name = "redcanary-subnet-public-1"
     }
 }
-
+    
 resource "aws_subnet" "redcanary-subnet-public-2" {
     vpc_id = "${aws_vpc.redcanary-vpc.id}"
     cidr_block = "10.0.1.0/24"
@@ -32,6 +34,7 @@ resource "aws_subnet" "redcanary-subnet-public-2" {
     }
 }
 
+//creates two private subnets, one in each of two availability zones for redundancy
 resource "aws_subnet" "redcanary-subnet-private-1" {
     vpc_id = "${aws_vpc.redcanary-vpc.id}"
     cidr_block = "10.0.128.0/18"
