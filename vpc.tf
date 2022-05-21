@@ -13,7 +13,7 @@ resource "aws_vpc" "redcanary-vpc" {
 resource "aws_subnet" "redcanary-subnet-public-1" {
     vpc_id = "${aws_vpc.redcanary-vpc.id}"
     cidr_block = "10.0.0.0/24"
-    map_public_ip_on_launch = "false"
+    map_public_ip_on_launch = "true"
     availability_zone = "us-east-1a"
 
     tags = {
@@ -24,7 +24,7 @@ resource "aws_subnet" "redcanary-subnet-public-1" {
 resource "aws_subnet" "redcanary-subnet-public-2" {
     vpc_id = "${aws_vpc.redcanary-vpc.id}"
     cidr_block = "10.0.1.0/24"
-    map_public_ip_on_launch = "false"
+    map_public_ip_on_launch = "true"
     availability_zone = "us-east-1b"
 
     tags = {
