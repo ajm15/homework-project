@@ -19,8 +19,6 @@ steps might be required. Rather than delive into that topic, however, I have foc
 
 ![Alt text](2022-05-20_14-19-27.jpg?raw=true "Title")
 
-2022-05-20_14-19-27.jpg
-
 VPC Design:
 To provide a maximal horizontal scaling opportunity, we start with a base VPC CIDR of 10.0.0.0/16.
 
