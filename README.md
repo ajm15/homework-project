@@ -17,7 +17,7 @@ that workload. The instructions for this project quite pointedly asked to create
 delivered on that request. Certainly, it would be possible to add segments to the USER_DATA sections of the instances to instruct them to perform whatever
 steps might be required. Rather than delive into that topic, however, I have focused on the delivery of infrastructure.
 
-!(https://github.com/ajm15/homework-project/raw/main/2022-05-20_14-19-27.jpg)
+![Alt text](2022-05-20_14-19-27.jpg?raw=true "Title")
 
 2022-05-20_14-19-27.jpg
 
