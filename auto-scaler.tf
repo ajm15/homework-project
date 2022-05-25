@@ -46,11 +46,8 @@ resource "aws_autoscaling_group" "app-servers-asg" {
         value = "app-server"
         propagate_at_launch = true
     }
-}
-
-resource "aws_autoscaling_attachment" "app-servers-attach" {
-    autoscaling_group_name = aws_autoscaling_group.app-servers-asg.id
-    lb_target_group_arn = aws_lb_target_group.app-servers-tg.arn
+    
+    target_group_arns = [aws_lb_target_group.app-servers-tg.arn]
 }
 
 output "alb_dns_name" {
